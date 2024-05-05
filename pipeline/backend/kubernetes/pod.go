@@ -63,7 +63,7 @@ func mkPod(step *types.Step, config *config, podName, goos string, options Backe
 }
 
 func stepToPodName(step *types.Step) (name string, err error) {
-	if step.Type == types.StepTypeService {
+	if isService(step) {
 		return serviceName(step)
 	}
 	return podName(step)
@@ -89,7 +89,7 @@ func podMeta(step *types.Step, config *config, options BackendOptions, podName s
 		return meta, err
 	}
 
-	if step.Type == types.StepTypeService {
+	if isService(step) {
 		meta.Labels[ServiceLabel], _ = serviceName(step)
 	}
 

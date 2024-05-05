@@ -24,6 +24,8 @@ import (
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
+
+	"go.woodpecker-ci.org/woodpecker/v2/pipeline/backend/types"
 )
 
 var (
@@ -101,4 +103,8 @@ func newInt64(val int64) *int64 {
 	ptr := new(int64)
 	*ptr = val
 	return ptr
+}
+
+func isService(step *types.Step) bool {
+	return step.Type == types.StepTypeService || (step.Detached && dnsPattern.FindStringIndex(step.Name) != nil)
 }
